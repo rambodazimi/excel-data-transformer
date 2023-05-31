@@ -1,7 +1,13 @@
 import pandas as pd
 import os
 import subprocess
+import datetime
+import time
 
+current_time = datetime.date.today()
+
+t = time.localtime()
+current_time = str(current_time) + str(time.strftime(" %H-%M-%S", t))
 
 # copy the file specified in csv_file_path and add 1 at the end of its name
 def copy_csv_file_with_suffix(csv_file_path, suffix):
@@ -14,7 +20,7 @@ def copy_csv_file_with_suffix(csv_file_path, suffix):
 
 
 def cut_excel_file(source_file_path, destination_folder_path):
-    file_name = os.path.basename(source_file_path)
+    file_name = os.path.basename(current_time + ".xlsx")
     destination_path = os.path.join(destination_folder_path, file_name)
     os.rename(source_file_path, destination_path)
     return destination_path
@@ -25,10 +31,11 @@ except ImportError:
     print("The 'fsspec' library is not found. Installing it...")
     subprocess.check_call(['pip', 'install', 'fsspec'])
 
+
 try:
     print("Starting the script...")
     # Specify the folder path where the original Excel file exists
-    folder_path = 'C://temp//Trimuph//Upload'
+    folder_path = 'C://temp//Triumph//Upload'
 
     found_excel_file = False
     print("Searching for the Excel file in the Upload folder...")
@@ -59,7 +66,7 @@ try:
     data_frame.iloc[:, 23] = column_24_updated
 
     # Extract the directory path of the Excel file
-    directory_path = 'C://temp//Trimuph'
+    directory_path = 'C://temp//Triumph'
 
     print("Creating a CSV file...")
 
@@ -72,7 +79,7 @@ try:
     print("CSV file saved successfully!")
 
     print("Making a copy of the CSV file...")
-    my_path = 'C://temp//Trimuph//tms_shipments.csv'
+    my_path = 'C://temp//Triumph//tms_shipments.csv'
     suffix = "1"
 
     copy_csv_file_with_suffix(my_path, suffix)
@@ -83,7 +90,7 @@ try:
     print("Moving the Excel file to the History folder...")
 
     source_file_path = file_path
-    destination_folder_path = "C://temp//Trimuph//History"
+    destination_folder_path = "C://temp//Triumph//History"
     destination_file_path = cut_excel_file(source_file_path, destination_folder_path)
     print("Successfully moved the original excel file to the History folder")
 
